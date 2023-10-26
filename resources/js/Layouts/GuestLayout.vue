@@ -15,5 +15,8 @@ import { Link } from '@inertiajs/vue3';
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-2xl rounded-lg">
             <slot />
         </div>
+        <div class="mt-4">
+            <slot name="footer" />
+        </div>
     </div>
 </template>

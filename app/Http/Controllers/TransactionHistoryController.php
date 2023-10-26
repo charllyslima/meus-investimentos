@@ -11,19 +11,21 @@ class TransactionHistoryController extends Controller
     public function index()
     {
         $transactionHistories = TransactionHistory::all();
-        return Inertia::render('TransactionHistories/list', [
+        return Inertia::render('TransactionHistories/List', [
             'transactionHistories' => $transactionHistories,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('TransactionHistories/create');
+        return Inertia::render('TransactionHistories/Form');
     }
 
     public function store(TransactionHistoryRequest $request)
     {
         TransactionHistory::create($request->validated());
+
+        
         return redirect()->route('transaction-histories.index');
     }
 

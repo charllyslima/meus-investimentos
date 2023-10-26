@@ -16,6 +16,7 @@ class TransactionHistoryRequest extends FormRequest
         return [
             'amount' => 'required|numeric|min:0.01',
             'transaction_type' => 'required|in:deposit,withdraw',
+            'operation_date' => 'required|date'
         ];
     }
 }
