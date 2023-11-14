@@ -1,0 +1,10 @@
+### GET ALL TRUSTS FIAGRO
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/eyJ0eXBlRnVuZCI6MzQsInBhZ2VOdW1iZXIiOjEsInBhZ2VTaXplIjoxMDB9;
+Accept: application/json
+
+### GET ALL TRUSTS FIAGRO FII
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/eyJ0eXBlRnVuZCI6NywicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjUwMH0=
+Accept: application/json
+
+### GET ALL STOCKS
+GET https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetInitialCompanies/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjIwfQ==

@@ -1,20 +1,22 @@
 <script setup>
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/InputError.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 
 
 const form = useForm({
-    amount: '',
-    transactionType: 'deposit',
-    dateOperation: new Date().toISOString().substr(0, 10)
+    amount: 0,
+    transaction_type: 'deposit',
+    operation_date: new Date().toISOString().substr(0, 10)
 });
 
 const submitForm = () => {
     form.post(route('transaction.create'), {
-        onFinish: () => {
-            form.reset('amount');
+        onFinish: (r) => {
+            console.log(r);
+            // form.reset('amount');
         },
     });
 };
@@ -39,23 +41,28 @@ const submitForm = () => {
                                 <InputLabel for="amount" class="block text-gray-700 text-sm font-bold mb-2">Valor:
                                 </InputLabel>
                                 <TextInput v-model="form.amount" type="text" id="amount" name="amount"
-                                    class="mt-1 block w-full" required />
+                                    class="mt-1 block w-full" required autofocus />
+
+                                <InputError class="mt-2" :message="form.errors.amount" />
                             </div>
                             <div class="mb-4">
-                                <InputLabel for="dateOperation" class="block text-gray-700 text-sm font-bold mb-2">Data da Operação:
+                                <InputLabel for="operation_date" class="block text-gray-700 text-sm font-bold mb-2">Data da
+                                    Operação:
                                 </InputLabel>
-                                <TextInput v-model="form.dateOperation" type="date" id="dateOperation" name="date_operation"
-                                    class="mt-1 block w-full" required />
+                                <TextInput v-model="form.operation_date" type="date" id="operation_date"
+                                    name="operation_date" class="mt-1 block w-full" required />
+                                <InputError class="mt-2" :message="form.errors.operation_date" />
                             </div>
                             <div class="mb-4">
                                 <InputLabel for="transactionType" class="block text-gray-700 text-sm font-bold mb-2">
                                     Tipo de Transação:
                                 </InputLabel>
-                                <select v-model="form.transactionType" id="transactionType" name="transaction_type"
+                                <select v-model="form.transaction_type" id="transactionType" name="transaction_type"
                                     class="mt-1 block w-full" required>
                                     <option value="deposit">Depósito</option>
                                     <option value="withdrawal">Retirada</option>
                                 </select>
+                                <InputError class="mt-2" :message="form.errors.transaction_type" />
                             </div>
 
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Criar

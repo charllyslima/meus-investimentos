@@ -1,10 +1,31 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, usePage, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { TransactionHistories } from './type';
+import Swal from 'sweetalert2';
 
 defineProps<{
-    transactionHistories?: any;
+    transactionHistories: TransactionHistories[];
 }>();
+
+const deleteTransaction = async (id: number) => {
+    const { isConfirmed } = await Swal.fire({
+        title: 'Tem certeza de que deseja apagar esta transação?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não',
+    });
+
+    if (isConfirmed) {
+        const form = useForm({ id });
+        form.delete(route('transaction.destroy'), {
+            onFinish: (r) => {
+                console.log(r);
+            },
+        });
+    }
+};
 
 
 </script>
@@ -15,7 +36,9 @@ defineProps<{
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Lista de Transações</h2>
-            <Link :href="route('transaction-histories.create')"> Criar Transação</Link>
+            <Link :href="route('transaction.create')">
+            Criar
+            </Link>
         </template>
 
         <div class="py-12">
@@ -25,17 +48,60 @@ defineProps<{
                         <h1 v-if="transactionHistories.length == 0">
                             Sem dados
                         </h1>
-                        <div>
-                            <ul>
-                                <li v-for="transaction in transactionHistories" :key="transaction.id">
-                                    {{ transaction.amount }} - {{ transaction.transaction_type }}
-                                </li>
-                            </ul>
-                        </div>
+                        <table v-else class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Valor
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Tipo de Transação
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Data da Transação
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                <tr v-for="transaction in transactionHistories" :key="transaction.id">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ transaction.amount }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ transaction.transaction_type }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ transaction.operation_date }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap flex space-x-3 justify-center">
+                                        <Link :href="route('transaction.create')"
+                                            class="bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-400 px-4 py-2 rounded-md">
+                                        Editar
+                                        </Link>
+                                        <button @click="deleteTransaction(transaction.id)"
+                                            class="bg-red-500 text-white hover:bg-red-600 focus:ring-4 focus:ring-red-400 px-4 py-2 rounded-md">
+                                            Apagar
+                                        </button>
+                                        <Link :href="route('transaction.destroy')">
+
+                                        </Link>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
+
 

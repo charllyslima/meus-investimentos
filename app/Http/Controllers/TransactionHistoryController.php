@@ -25,8 +25,8 @@ class TransactionHistoryController extends Controller
     {
         TransactionHistory::create($request->validated());
 
-        
-        return redirect()->route('transaction-histories.index');
+
+        return redirect()->route('transaction.index');
     }
 
     public function edit(TransactionHistory $transactionHistory)
