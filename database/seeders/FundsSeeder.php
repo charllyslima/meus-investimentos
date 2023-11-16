@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Trust;
+use App\Models\Funds;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Seeder;
 use GuzzleHttp\Client;
 
-class TrustsSeeder extends Seeder
+class FundsSeeder extends Seeder
 {
     const FII = 7;
     const FIAGRO = 34;
@@ -50,11 +50,11 @@ class TrustsSeeder extends Seeder
         // Itera sobre os resultados
         foreach ($data['results'] as $item) {
             // Verifica se o registro já existe na tabela
-            $existingTrust = Trust::where('acronym', $item['acronym'])->first();
+            $existingTrust = Funds::where('acronym', $item['acronym'])->first();
 
             // Se não existir, cria um novo registro
             if (!$existingTrust) {
-                Trust::create([
+                Funds::create([
                     'acronym' => $item['acronym'],
                     'fundName' => $item['fundName'],
                     'companyName' => $item['companyName'],
