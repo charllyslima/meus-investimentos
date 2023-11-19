@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionHistory extends Model
 {
-    use HasFactory;
+    const WITHDRAWAL = 'withdrawal';
+    const DEPOSIT = 'deposit';
 
     protected $fillable = ['amount', 'operation_date', 'transaction_type'];
 

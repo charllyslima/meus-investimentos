@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
+
+defineProps(['totalInvested'])
+
 </script>
 
 <template>
@@ -13,7 +16,7 @@ import {Head} from '@inertiajs/vue3';
                     Patrimonio total
                 </div>
                 <div class="mt-1 text-3xl font-semibold text-gray-900">
-                    12,00
+                    {{totalInvested}}
                 </div>
             </div>
             <div class="w-full px-4 py-5 bg-white rounded-lg shadow">

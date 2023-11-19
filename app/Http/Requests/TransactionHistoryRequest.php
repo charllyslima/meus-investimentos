@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\TransactionHistory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransactionHistoryRequest extends FormRequest
@@ -15,7 +16,7 @@ class TransactionHistoryRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric|min:0.01',
-            'transaction_type' => 'required|in:deposit,withdraw',
+            'transaction_type' => "required|in:" . TransactionHistory::DEPOSIT . "," . TransactionHistory::WITHDRAWAL,
             'operation_date' => 'required|date'
         ];
     }

@@ -11,8 +11,18 @@ class TransactionHistoryController extends Controller
     public function index()
     {
         $transactionHistories = TransactionHistory::all();
+
+        $totalDeposit = TransactionHistory::where('transaction_type', TransactionHistory::DEPOSIT)->sum('amount');
+
+        $totalWithdraw = TransactionHistory::where('transaction_type', TransactionHistory::WITHDRAWAL)->sum('amount');
+
+        $totalBalance = $totalDeposit - $totalWithdraw;
+
         return Inertia::render('TransactionHistories/List', [
             'transactionHistories' => $transactionHistories,
+            'totalDeposit' => (float)$totalDeposit,
+            'totalWithdraw' => (float)$totalWithdraw,
+            'totalBalance' => (float)$totalBalance,
         ]);
     }
 
@@ -26,25 +36,31 @@ class TransactionHistoryController extends Controller
         TransactionHistory::create($request->validated());
 
 
-        return redirect()->route('transaction.index');
+        return redirect()->route('transaction');
     }
 
-    public function edit(TransactionHistory $transactionHistory)
+    public function edit(int $id)
     {
-        return Inertia::render('TransactionHistories/Edit', [
+
+        $transactionHistory = TransactionHistory::find($id);
+
+        return Inertia::render('TransactionHistories/Form', [
             'transactionHistory' => $transactionHistory,
+            'id' => $id,
         ]);
     }
 
-    public function update(TransactionHistoryRequest $request, TransactionHistory $transactionHistory)
+    public function update(TransactionHistoryRequest $request, int $id)
     {
+        $transactionHistory = TransactionHistory::find($id);
         $transactionHistory->update($request->validated());
-        return redirect()->route('transaction-histories.index');
+        return redirect()->route('transaction');
     }
 
-    public function destroy(TransactionHistory $transactionHistory)
+    public function destroy(int $id)
     {
+        $transactionHistory = TransactionHistory::find($id);
         $transactionHistory->delete();
-        return redirect()->route('transaction-histories.index');
+        return redirect()->route('transaction');
     }
 }

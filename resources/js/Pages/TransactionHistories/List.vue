@@ -4,9 +4,13 @@ import {Head, Link, useForm} from '@inertiajs/vue3';
 import {TransactionHistories} from './type';
 import Swal from 'sweetalert2';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import {formatDate, formatMoney} from "@/Utils/formatUtils";
 
 defineProps<{
-    transactionHistories: TransactionHistories[];
+    transactionHistories: TransactionHistories[],
+    totalDeposit: number,
+    totalWithdraw: number,
+    totalBalance: number
 }>();
 
 const deleteTransaction = async (id: number) => {
@@ -20,7 +24,7 @@ const deleteTransaction = async (id: number) => {
 
     if (isConfirmed) {
         const form = useForm({id});
-        form.delete(route('transaction.destroy'), {
+        form.delete(route('transaction.destroy', {id: form.id}), {
             onFinish: (r) => {
                 console.log(r);
             },
@@ -28,6 +32,14 @@ const deleteTransaction = async (id: number) => {
     }
 };
 
+const translateTransactionType = (type: String) => {
+    const translations = {
+        deposit: 'Depósito',
+        withdrawal: 'Retirada',
+    };
+
+    return translations[type] || type;
+};
 
 </script>
 
@@ -36,12 +48,12 @@ const deleteTransaction = async (id: number) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex justify-between">
+            <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Lista de
                     Transações</h2>
                 <Link :href="route('transaction.create')"
                       class="w-10 h-10 flex items-center justify-center bg-indigo-500 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 transition duration-300">
-                        <font-awesome-icon icon="plus" class="h-4 h-4"/>
+                    <font-awesome-icon icon="plus" class="h-4 h-4"/>
                 </Link>
             </div>
         </template>
@@ -53,55 +65,68 @@ const deleteTransaction = async (id: number) => {
                         <h1 v-if="transactionHistories.length == 0">
                             Sem dados
                         </h1>
-                        <table v-else class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                    Valor
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                    Tipo de Transação
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                    Data da Transação
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                    Ações
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                            <tr v-for="transaction in transactionHistories" :key="transaction.id">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ transaction.amount }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ transaction.transaction_type }}
-                                </td>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Data da Transação
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Valor
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Tipo de Transação
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Ações
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                    v-for="transaction in transactionHistories" :key="transaction.id">
+                                    <td class="px-6 py-4">
+                                        {{ formatDate(transaction.operation_date, false) }}
+                                    </td>
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ formatMoney(transaction.amount) }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ translateTransactionType(transaction.transaction_type) }}
+                                    </td>
 
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ transaction.operation_date }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap flex space-x-3 justify-center">
-                                    <Link :href="route('transaction.create')"
-                                          class="bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-400 px-4 py-2 rounded-md">
-                                        Editar
-                                    </Link>
-                                    <button @click="deleteTransaction(transaction.id)"
-                                            class="bg-red-500 text-white hover:bg-red-600 focus:ring-4 focus:ring-red-400 px-4 py-2 rounded-md">
-                                        Apagar
-                                    </button>
-                                    <Link :href="route('transaction.destroy')">
+                                    <td class="px-6 py-4 text-right flex space-x-8">
+                                        <Link :href="route('transaction.edit', {id: transaction.id})"
+                                              class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                            Editar
+                                        </Link>
+                                        <button @click="deleteTransaction(transaction.id)"
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                            Apagar
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr class="font-semibold text-gray-900 dark:text-white">
+                                    <th scope="row" class="px-6 py-3 text-base">Total</th>
+                                    <td class="px-6 py-3">{{ formatMoney(totalBalance) }}</td>
+                                    <td class="px-6 py-3">
+                                        <p class="text-green-600">
+                                            <strong>Depositado:</strong> {{ formatMoney(totalDeposit) }}
+                                        </p>
+                                        <p class="text-red-600">
+                                            <strong>Retirado:</strong> {{ formatMoney(totalWithdraw) }}
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
-                                    </Link>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
