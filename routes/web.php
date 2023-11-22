@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FundsController;
+use App\Http\Controllers\OperationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionHistoryController;
 use Illuminate\Foundation\Application;
@@ -29,12 +31,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/transactions', [TransactionHistoryController::class, 'index'])->name('transaction');
     Route::get('/transactions/create', [TransactionHistoryController::class, 'create'])->name('transaction.create');
-    Route::get('/transactions/edit/{id}', [TransactionHistoryController::class, 'edit'])->name('transaction.edit');
     Route::post('/transactions/create', [TransactionHistoryController::class, 'store'])->name('transaction.create');
-    Route::put('/transactions/update/{id}', [TransactionHistoryController::class, 'update'])->name('transaction.update');
+    Route::get('/transactions/edit/{id}', [TransactionHistoryController::class, 'edit'])->name('transaction.edit');
+    Route::put('/transactions/edit/{id}', [TransactionHistoryController::class, 'update'])->name('transaction.update');
     Route::delete('/transactions/destroy/{id}', [TransactionHistoryController::class, 'destroy'])->name('transaction.destroy');
+
+    Route::get('/operations', [OperationController::class, 'index'])->name('operation');
+    Route::get('/operations/create', [OperationController::class, 'create'])->name('operation.create');
+    Route::post('/operations/create', [OperationController::class, 'store'])->name('operation.create');
+    Route::get('/operations/edit', [OperationController::class, 'edit'])->name('operation.edit');
+    Route::put('/operations/edit', [OperationController::class, 'update'])->name('operation.update');
+    Route::delete('/operations/destroy/{id}', [OperationController::class, 'destroy'])->name('operation.destroy');
+
 });
 
 require __DIR__ . '/auth.php';

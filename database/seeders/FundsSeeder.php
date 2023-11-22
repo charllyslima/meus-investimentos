@@ -33,7 +33,7 @@ class FundsSeeder extends Seeder
         $params = [
             'typeFund' => $fundType,
             'pageNumber' => 1,
-            'pageSize' => 100,
+            'pageSize' => 500,
         ];
 
         $encodeData = base64_encode(json_encode($params));

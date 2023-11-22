@@ -12,6 +12,7 @@ const form = useForm({
     amount: props.transactionHistory ? props.transactionHistory?.amount : 0,
     transaction_type: props.transactionHistory ? props.transactionHistory?.transaction_type : 'deposit',
     operation_date: props.transactionHistory ? props.transactionHistory.operation_date : new Date().toISOString().substr(0, 10)
+    //TODO: TROCAR PARA transaction_date PARA PADRONIZAR
 });
 
 
@@ -84,8 +85,6 @@ const submitForm = () => {
                                 </button>
                             </div>
                         </form>
-
-
                     </section>
                 </div>
             </div>
