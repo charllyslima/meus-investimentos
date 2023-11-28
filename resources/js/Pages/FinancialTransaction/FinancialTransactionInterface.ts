@@ -1,7 +1,7 @@
 export interface FinancialTransaction {
   id: number
   amount: number
-  transaction_type: string
+  transaction_type: 'DEPOSIT' | 'WITHDRAW'
   transaction_date: string
 }
 
