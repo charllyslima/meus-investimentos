@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
-import {formatMoney} from "@/Utils/formatUtils";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head } from '@inertiajs/vue3'
+import { formatMoney } from '@/Utils/formatUtils'
 
 defineProps(['totalInvested'])
 

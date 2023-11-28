@@ -1,45 +1,45 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head, Link, useForm} from '@inertiajs/vue3';
-import {TransactionHistories} from './type';
-import Swal from 'sweetalert2';
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import {formatDate, formatMoney} from "@/Utils/formatUtils";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head, Link, useForm } from '@inertiajs/vue3'
+import { type FinancialTransaction } from './FinancialTransactionInterface'
+import Swal from 'sweetalert2'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { formatDate, formatMoney } from '@/Utils/formatUtils'
 
 defineProps<{
-    transactionHistories: TransactionHistories[],
-    totalDeposit: number,
-    totalWithdraw: number,
-    totalBalance: number
-}>();
+  financialTransactions: FinancialTransaction[]
+  totalDeposit: number
+  totalWithdraw: number
+  totalBalance: number
+}>()
 
 const deleteTransaction = async (id: number) => {
-    const {isConfirmed} = await Swal.fire({
-        title: 'Tem certeza de que deseja apagar esta transação?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sim',
-        cancelButtonText: 'Não',
-    });
+  const { isConfirmed } = await Swal.fire({
+    title: 'Tem certeza de que deseja apagar esta transação?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sim',
+    cancelButtonText: 'Não'
+  })
 
-    if (isConfirmed) {
-        const form = useForm({id});
-        form.delete(route('transaction.destroy', {id: form.id}), {
-            onFinish: (r) => {
-                console.log(r);
-            },
-        });
-    }
-};
+  if (isConfirmed) {
+    const form = useForm({ id })
+    form.delete(route('transaction.destroy', { id: form.id }), {
+      onFinish: (r) => {
+        console.log(r)
+      }
+    })
+  }
+}
 
-const translateTransactionType = (type: String) => {
-    const translations = {
-        deposit: 'Depósito',
-        withdrawal: 'Retirada',
-    };
+const translateTransactionType = (type: string) => {
+  const translations = {
+    DEPOSIT: 'Depósito',
+    WITHDRAWAL: 'Retirada'
+  }
 
-    return translations[type] || type;
-};
+  return translations[type] || type
+}
 
 </script>
 
@@ -49,8 +49,9 @@ const translateTransactionType = (type: String) => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Lista de
-                    Transações</h2>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    Lista de Transações
+                </h2>
                 <Link :href="route('transaction.create')"
                       class="w-10 h-10 flex items-center justify-center bg-indigo-500 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 transition duration-300">
                     <font-awesome-icon icon="plus" class="h-4 h-4"/>
@@ -62,7 +63,7 @@ const translateTransactionType = (type: String) => {
             <div class="mx-auto">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h1 v-if="transactionHistories.length == 0">
+                        <h1 v-if="financialTransactions.length == 0">
                             Sem dados
                         </h1>
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -86,9 +87,9 @@ const translateTransactionType = (type: String) => {
                                 </thead>
                                 <tbody>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                    v-for="transaction in transactionHistories" :key="transaction.id">
+                                    v-for="transaction in financialTransactions" :key="transaction.id">
                                     <td class="px-6 py-4">
-                                        {{ formatDate(transaction.operation_date, false) }}
+                                        {{ formatDate(transaction.transaction_date, false) }}
                                     </td>
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -133,5 +134,3 @@ const translateTransactionType = (type: String) => {
         </div>
     </AuthenticatedLayout>
 </template>
-
-

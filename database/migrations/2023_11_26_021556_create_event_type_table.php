@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('transaction_histories', function (Blueprint $table) {
-            $table->date('operation_date');
+        Schema::create('event_type', function (Blueprint $table) {
+            $table->id();
+            $table->string('event_type');
+            $table->float('multiplier')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('transaction_histories', function (Blueprint $table) {
-            $table->dropColumn('operation_date');
-        });
+        Schema::dropIfExists('event_type');
     }
 };

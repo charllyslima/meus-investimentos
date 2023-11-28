@@ -4,19 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('funds', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string("acronym", 4)->unique();
-            $table->string("fundName");
-            $table->string("companyName");
-            $table->enum('type', ['FIAGRO', 'FII']);
-            $table->string('segment')->nullable();
+            $table->foreignId('event_type_id')->constrained('event_type');
+            $table->json('event_data');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('funds');
+        Schema::dropIfExists('events');
     }
 };

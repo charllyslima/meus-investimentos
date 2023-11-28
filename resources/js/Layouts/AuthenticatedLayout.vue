@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import {Link} from '@inertiajs/vue3';
-import Sidebar from "@/Layouts/Sidebar/Sidebar.vue";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { ref } from 'vue'
+import ApplicationLogo from '@/Components/ApplicationLogo.vue'
+import Dropdown from '@/Components/Dropdown.vue'
+import DropdownLink from '@/Components/DropdownLink.vue'
+import { Link } from '@inertiajs/vue3'
+import Sidebar from '@/Layouts/Sidebar/MainSidebar.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-const isOpen = ref(false);
+const isOpen = ref(false)
 </script>
 
 <template>
@@ -59,7 +59,6 @@ const isOpen = ref(false);
                     </div>
                 </div>
             </nav>
-
 
             <Sidebar :isOpen="isOpen">
                 <header class="bg-white dark:bg-gray-800 shadow mb-4 shadow-sm rounded-lg" v-if="$slots.header">

@@ -1,45 +1,45 @@
 <script setup lang="ts">
 
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import Form from "@/Pages/TransactionHistories/Form.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
-import {Link, useForm} from "@inertiajs/vue3";
-import SelectInput from "@/Components/SelectInput.vue";
-import {Fund} from "./type";
-import DataList from "@/Components/DataList.vue";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import Form from '@/Pages/FinancialTransaction/FinancialTransactionCreate.vue'
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import TextInput from '@/Components/TextInput.vue'
+import { Link, useForm } from '@inertiajs/vue3'
+import SelectInput from '@/Components/SelectInput.vue'
+import { type Fund } from './type'
+import DataList from '@/Components/DataList.vue'
 
 const props = defineProps<{
-    funds: Fund[]
-    id?: number,
-}>();
+  funds: Fund[]
+  id?: number
+}>()
 console.log(props.funds)
 const form = useForm({
-    operation_date: new Date().toISOString().substr(0, 10),
-    fund: null,
-    quantity: 0,
-    value: null,
-    operation_type: 'purchase'
-});
+  operation_date: new Date().toISOString().substr(0, 10),
+  fund: null,
+  quantity: 0,
+  value: null,
+  operation_type: 'purchase'
+})
 
 const submitForm = () => {
-    if (props.id) {
-        form.put(route('operation.update', {id: props.id}), {
-            onFinish: (r) => {
-                console.log(r);
-                // form.reset('amount');
-            },
-        });
-    } else {
-        form.post(route('operation.create'), {
-            onFinish: (r) => {
-                console.log(r);
-                // form.reset('amount');
-            },
-        });
-    }
-};
+  if (props.id) {
+    form.put(route('operation.update', { id: props.id }), {
+      onFinish: (r) => {
+        console.log(r)
+        // form.reset('amount');
+      }
+    })
+  } else {
+    form.post(route('operation.create'), {
+      onFinish: (r) => {
+        console.log(r)
+        // form.reset('amount');
+      }
+    })
+  }
+}
 
 </script>
 

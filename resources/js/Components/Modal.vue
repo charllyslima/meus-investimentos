@@ -1,60 +1,60 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from 'vue';
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 
 const props = withDefaults(
-    defineProps<{
-        show?: boolean;
-        maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-        closeable?: boolean;
-    }>(),
-    {
-        show: false,
-        maxWidth: '2xl',
-        closeable: true,
-    }
-);
+  defineProps<{
+    show?: boolean
+    maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+    closeable?: boolean
+  }>(),
+  {
+    show: false,
+    maxWidth: '2xl',
+    closeable: true
+  }
+)
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close'])
 
 watch(
-    () => props.show,
-    () => {
-        if (props.show) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'visible';
-        }
+  () => props.show,
+  () => {
+    if (props.show) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'visible'
     }
-);
+  }
+)
 
 const close = () => {
-    if (props.closeable) {
-        emit('close');
-    }
-};
+  if (props.closeable) {
+    emit('close')
+  }
+}
 
 const closeOnEscape = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && props.show) {
-        close();
-    }
-};
+  if (e.key === 'Escape' && props.show) {
+    close()
+  }
+}
 
-onMounted(() => document.addEventListener('keydown', closeOnEscape));
+onMounted(() => { document.addEventListener('keydown', closeOnEscape) })
 
 onUnmounted(() => {
-    document.removeEventListener('keydown', closeOnEscape);
-    document.body.style.overflow = 'visible';
-});
+  document.removeEventListener('keydown', closeOnEscape)
+  document.body.style.overflow = 'visible'
+})
 
 const maxWidthClass = computed(() => {
-    return {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
-    }[props.maxWidth];
-});
+  return {
+    sm: 'sm:max-w-sm',
+    md: 'sm:max-w-md',
+    lg: 'sm:max-w-lg',
+    xl: 'sm:max-w-xl',
+    '2xl': 'sm:max-w-2xl'
+  }[props.maxWidth]
+})
 </script>
 
 <template>

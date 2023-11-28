@@ -1,5 +1,5 @@
 <script setup>
-import SidebarItem from "@/Layouts/Sidebar/Partial/SidebarItem.vue";
+import SidebarItem from '@/Layouts/Sidebar/Partial/SidebarItem.vue'
 
 const props = defineProps(['isOpen'])
 </script>

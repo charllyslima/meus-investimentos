@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
 defineProps<{
-    modelValue: string;
-}>();
+  modelValue: string
+}>()
 
-defineEmits(['update:modelValue']);
+defineEmits(['update:modelValue'])
 
-const input = ref<HTMLInputElement | null>(null);
+const input = ref<HTMLInputElement | null>(null)
 
 onMounted(() => {
-    if (input.value?.hasAttribute('autofocus')) {
-        input.value?.focus();
-    }
-});
+  if (input.value?.hasAttribute('autofocus')) {
+    input.value?.focus()
+  }
+})
 
-defineExpose({ focus: () => input.value?.focus() });
+defineExpose({ focus: () => input.value?.focus() })
 
 const randomId = (Math.random() + 1).toString(36).substring(7)
 </script>
-
 
 <template>
     <input

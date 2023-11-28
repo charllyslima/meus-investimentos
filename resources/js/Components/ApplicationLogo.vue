@@ -17,5 +17,4 @@
       <text x="20" y="250" font-size="30" fill="#0077B6">Meus Investimentos</text>
     </svg>
 
-
 </template>

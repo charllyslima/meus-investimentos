@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('operations', function (Blueprint $table) {
-            //TODO: implement
+        Schema::create('fi_asset_infos', function (Blueprint $table) {
             $table->id();
+            //TODO: AJUSTAR
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('operations');
+        Schema::dropIfExists('fi_asset_infos');
     }
 };

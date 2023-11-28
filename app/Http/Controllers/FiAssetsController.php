@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Funds;
+use App\Models\FiAsset;
 use Illuminate\Http\Request;
 
-class FundsController extends Controller
+class FiAssetsController extends Controller
 {
     public function list()
     {
-        return Funds::all();
+        return FiAsset::all();
     }
 }

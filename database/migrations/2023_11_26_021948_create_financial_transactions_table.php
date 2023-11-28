@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction_histories', function (Blueprint $table) {
+        Schema::create('financial_transactions', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount', 10, 2);
-            $table->enum('transaction_type', ['deposit', 'withdraw']);
+            $table->enum('transaction_type', ['DEPOSIT', 'WITHDRAWAL'])->default('DEPOSIT');
+            $table->decimal('amount', 12, 2);
+            $table->date('transaction_date');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction_histories');
+        Schema::dropIfExists('financial_transactions');
     }
 };

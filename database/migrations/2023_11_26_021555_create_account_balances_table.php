@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('transaction_histories', function (Blueprint $table) {
-            $table->enum('transaction_type', ['deposit', 'withdrawal'])->change();
+        Schema::create('account_balances', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->decimal('balance', 12, 2);
+            $table->date('balance_date');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('transaction_histories', function (Blueprint $table) {
-            $table->enum('transaction_type', ['deposit', 'withdraw'])->change();
-        });
+        Schema::dropIfExists('account_balances');
     }
 };

@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Stock;
+use App\Models\StockAsset;
 use GuzzleHttp\Client;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class StocksSeeder extends Seeder
+class StocksAssetsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -42,7 +42,7 @@ class StocksSeeder extends Seeder
 
             // Insere os dados na tabela
             foreach ($data['results'] as $item) {
-                Stock::create([
+                StockAsset::create([
                     'codeCVM' => $item['codeCVM'],
                     'issuingCompany' => $item['issuingCompany'],
                     'companyName' => $item['companyName'],

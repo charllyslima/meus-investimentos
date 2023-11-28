@@ -1,14 +1,14 @@
 <script>
-import NavLink from "@/Components/NavLink.vue";
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import NavLink from '@/Components/NavLink.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 export default {
-    components: {NavLink, FontAwesomeIcon},
-    props: {
-        to: String,
-        icon: String,
-        text: String,
-    }
-};
+  components: { NavLink, FontAwesomeIcon },
+  props: {
+    to: String,
+    icon: String,
+    text: String
+  }
+}
 </script>
 
 <template>
