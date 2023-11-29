@@ -1,16 +1,17 @@
 <script setup lang='ts'>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import { type FinancialTransaction } from './FinancialTransactionInterface'
+import { type IFinancialTransaction } from './FinancialTransactionInterface'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { formatDate, formatMoney } from '@/Utils/formatUtils'
 
 defineProps<{
-    financialTransactions: FinancialTransaction[]
+    financialTransactions: IFinancialTransaction[]
     totalDeposit: number
     totalWithdraw: number
     totalBalance: number
+    totalInvestment: number
 }>()
 
 const deleteTransaction = async (id: number) => {
@@ -24,7 +25,7 @@ const deleteTransaction = async (id: number) => {
 
     if (isConfirmed) {
         const form = useForm({ id })
-        form.delete(route('transaction.destroy', { id: form.id }), {
+        form.delete(route('financial.transaction.destroy', { id: form.id }), {
             onFinish: (r) => {
                 console.log(r)
             }
@@ -52,7 +53,7 @@ const translateTransactionType = (type: string) => {
                 <h2 class='font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight'>
                     Lista de Transações
                 </h2>
-                <Link :href="route('transaction.create')"
+                <Link :href="route('financial.transaction.create')"
                       class='w-10 h-10 flex items-center justify-center bg-indigo-500 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 transition duration-300'>
                     <font-awesome-icon icon='plus' class='h-4 h-4' />
                 </Link>
@@ -66,7 +67,7 @@ const translateTransactionType = (type: string) => {
                         <h1 v-if='financialTransactions.length == 0'>
                             Sem dados
                         </h1>
-                        <div class='relative overflow-x-auto shadow-md sm:rounded-lg'>
+                        <div class='relative overflow-x-auto shadow-md sm:rounded-lg' v-else>
                             <table class='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
                                 <thead
                                     class='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -100,7 +101,7 @@ const translateTransactionType = (type: string) => {
                                     </td>
 
                                     <td class='px-6 py-4 text-right flex space-x-8'>
-                                        <Link :href="route('transaction.edit', {id: transaction.id})"
+                                        <Link :href="route('financial.transaction.edit', {id: transaction.id})"
                                               class='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
                                             Editar
                                         </Link>
@@ -118,6 +119,9 @@ const translateTransactionType = (type: string) => {
                                     <td class='px-6 py-3'>
                                         <p class='text-green-600'>
                                             <strong>Depositado:</strong> {{ formatMoney(totalDeposit) }}
+                                        </p>
+                                        <p class='text-blue-600'>
+                                            <strong>Investido:</strong> {{ formatMoney(totalInvestment) }}
                                         </p>
                                         <p class='text-red-600'>
                                             <strong>Retirado:</strong> {{ formatMoney(totalWithdraw) }}

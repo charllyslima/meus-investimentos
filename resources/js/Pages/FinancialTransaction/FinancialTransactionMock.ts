@@ -1,7 +1,7 @@
 import moment from 'moment'
-import { type FinancialTransaction } from '@/Pages/FinancialTransaction/FinancialTransactionInterface'
+import { type IFinancialTransaction } from '@/Pages/FinancialTransaction/FinancialTransactionInterface'
 
-export const FinancialTransactionMock: FinancialTransaction = {
+export const FinancialTransactionMock: IFinancialTransaction = {
     id: 1,
     transaction_type: 'DEPOSIT',
     amount: 0,
@@ -13,7 +13,7 @@ export const FinancialTransactionConstruct = (
     amount: number,
     transaction_type: 'DEPOSIT' | 'WITHDRAW',
     transaction_date: string
-): FinancialTransaction => {
+): IFinancialTransaction => {
     return {
         id,
         amount,

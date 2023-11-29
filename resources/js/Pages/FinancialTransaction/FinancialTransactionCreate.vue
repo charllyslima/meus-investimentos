@@ -7,7 +7,7 @@ import FinancialTransactionForm from '@/Pages/FinancialTransaction/Partial/Finan
 const form = useForm(FinancialTransactionMock)
 
 const submitForm = () => {
-  form.post(route('transaction.create'), {
+  form.post(route('financial.transaction.create'), {
     onFinish: (r) => {
       console.log(r)
       // form.reset('amount');

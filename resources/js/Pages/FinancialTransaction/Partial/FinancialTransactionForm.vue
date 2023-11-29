@@ -4,11 +4,11 @@ import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import { InertiaForm, Link } from '@inertiajs/vue3'
-import { FinancialTransaction } from '@/Pages/FinancialTransaction/FinancialTransactionInterface'
+import { IFinancialTransaction } from '@/Pages/FinancialTransaction/FinancialTransactionInterface'
 
 
 defineProps<{
-    form: InertiaForm<FinancialTransaction>,
+    form: InertiaForm<IFinancialTransaction>,
     submitForm: () => void,
 }>()
 
@@ -51,7 +51,7 @@ defineProps<{
                     </div>
 
                     <div class='flex justify-end space-x-4'>
-                        <Link :href="route('transaction')" class='bg-gray-500 text-white px-4 py-2 rounded-md'>
+                        <Link :href="route('financial.transaction')" class='bg-gray-500 text-white px-4 py-2 rounded-md'>
                             Cancelar
                         </Link>
                         <button type='submit' class='bg-blue-500 text-white px-4 py-2 rounded-md'>

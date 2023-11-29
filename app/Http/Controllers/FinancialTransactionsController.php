@@ -25,6 +25,10 @@ class FinancialTransactionsController extends Controller
             ->where('transaction_type', FinancialTransaction::WITHDRAWAL)
             ->sum('amount');
 
+        $totalInvestment = FinancialTransaction::where('user_id', $user_id)
+            ->where('transaction_type', FinancialTransaction::INVESTMENT)
+            ->sum('amount');
+
         $totalBalance = $totalDeposit - $totalWithdraw;
 
         return Inertia::render('FinancialTransaction/FinancialTransactionList', [
@@ -32,6 +36,7 @@ class FinancialTransactionsController extends Controller
             'totalDeposit' => (float)$totalDeposit,
             'totalWithdraw' => (float)$totalWithdraw,
             'totalBalance' => (float)$totalBalance,
+            'totalInvestment' => (float)$totalInvestment,
         ]);
     }
 
@@ -45,7 +50,7 @@ class FinancialTransactionsController extends Controller
 
         FinancialTransaction::create($request->validated());
 
-        return redirect()->route('transaction');
+        return redirect()->route('financial-transaction');
     }
 
     /**
@@ -63,7 +68,7 @@ class FinancialTransactionsController extends Controller
                 'financialTransaction' => $transactionHistory
             ]);
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('transaction');
+            return redirect()->route('financial-transaction');
         }
     }
 
@@ -75,9 +80,9 @@ class FinancialTransactionsController extends Controller
                 throw new Exception('Você não tem permissão para acessar este registro.');
             }
             $transactionHistory->update($request->validated());
-            return redirect()->route('transaction');
+            return redirect()->route('financial-transaction');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('transaction');
+            return redirect()->route('financial-transaction');
         }
 
     }
@@ -86,6 +91,6 @@ class FinancialTransactionsController extends Controller
     {
         $transactionHistory = FinancialTransaction::findOrFail($id);
         $transactionHistory->delete();
-        return redirect()->route('transaction');
+        return redirect()->route('financial-transaction');
     }
 }

@@ -1,11 +1,11 @@
 <script setup lang='ts'>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { useForm } from '@inertiajs/vue3'
-import { type FinancialTransaction } from './FinancialTransactionInterface'
+import { type IFinancialTransaction } from './FinancialTransactionInterface'
 import { FinancialTransactionConstruct } from '@/Pages/FinancialTransaction/FinancialTransactionMock'
 import FinancialTransactionForm from '@/Pages/FinancialTransaction/Partial/FinancialTransactionForm.vue'
 
-const props = defineProps<{ financialTransaction: FinancialTransaction }>()
+const props = defineProps<{ financialTransaction: IFinancialTransaction }>()
 const mockObject = FinancialTransactionConstruct(
     props.financialTransaction.id,
     props.financialTransaction.amount,
@@ -15,7 +15,7 @@ const mockObject = FinancialTransactionConstruct(
 const form = useForm(mockObject)
 
 const submitForm = () => {
-    form.put(route('transaction.update', { id: props.financialTransaction.id }), {
+    form.put(route('financial.transaction.update', { id: props.financialTransaction.id }), {
         onFinish: () => {
             // userForm.reset('amount');
         }

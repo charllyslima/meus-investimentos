@@ -17,7 +17,8 @@ const props = defineProps(['isOpen'])
             <div class="flex-1">
                 <ul class="pt-2 pb-4 space-y-1 text-sm  flex space-y-3 flex-col">
                     <SidebarItem text="Inicio" icon="home" to="dashboard"/>
-                    <SidebarItem text="Transações" icon="arrow-right-arrow-left" to="transaction"/>
+                    <SidebarItem text="Movimentação Financeira" icon="arrow-right-arrow-left" to="financial.transaction"/>
+                    <SidebarItem text="Transações" icon="arrow-right-arrow-left" to="asset.transaction"/>
                 </ul>
             </div>
         </div>

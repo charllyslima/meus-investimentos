@@ -9,6 +9,7 @@ class FinancialTransaction extends Model
 {
     const WITHDRAWAL = 'WITHDRAWAL';
     const DEPOSIT = 'DEPOSIT';
+    const INVESTMENT = 'INVESTMENT';
 
     protected $fillable = ['user_id', 'transaction_type', 'amount', 'transaction_date'];
 
