@@ -30,6 +30,9 @@ class FiAssetsSeeder extends Seeder
      */
     private function seedTrusts(int $fundType): void
     {
+
+        $urlBase = env('URI_B3', '');
+
         $params = [
             'typeFund' => $fundType,
             'pageNumber' => 1,
@@ -38,7 +41,7 @@ class FiAssetsSeeder extends Seeder
 
         $encodeData = base64_encode(json_encode($params));
 
-        $apiUrl = "https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/$encodeData";
+        $apiUrl = "{$urlBase}/fundsProxy/fundsCall/GetListedFundsSIG/$encodeData";
 
         // Use o Guzzle para fazer a requisição HTTP
         $client = new Client();

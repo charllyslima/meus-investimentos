@@ -14,6 +14,9 @@ class StocksAssetsSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $urlBase = env('URI_B3', '');
+
         // Configuração do cliente Guzzle
         $client = new Client();
 
@@ -32,7 +35,7 @@ class StocksAssetsSeeder extends Seeder
             $base64Code = base64_encode(json_encode($params));
 
             // URL da API
-            $apiUrl = 'https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetInitialCompanies/' . $base64Code;
+            $apiUrl = "{$urlBase}/listedCompaniesProxy/CompanyCall/GetInitialCompanies/{$base64Code}";
 
             // Faz a requisição HTTP
             $response = $client->get($apiUrl);

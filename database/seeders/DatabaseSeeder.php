@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FiAssetsSeeder::class,
             StocksAssetsSeeder::class,
+            FiDividendsSeeder::class
         ]);
     }
 }

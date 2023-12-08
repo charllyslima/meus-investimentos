@@ -1,10 +1,22 @@
-### GET ALL TRUSTS FIAGRO
-GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/eyJ0eXBlRnVuZCI6MzQsInBhZ2VOdW1iZXIiOjEsInBhZ2VTaXplIjoxMDB9;
+### GET ALL FIAGRO
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/eyJ0eXBlRnVuZCI6MzQsInBhZ2VOdW1iZXIiOjEsInBhZ2VTaXplIjoyMH0=
 Accept: application/json
 
-### GET ALL TRUSTS FIAGRO FII
+### GET ALL FII
 GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/eyJ0eXBlRnVuZCI6NywicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjUwMH0=
 Accept: application/json
 
 ### GET ALL STOCKS
 GET https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetInitialCompanies/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjIwfQ==
+Accept: application/json
+
+### GET ALL DIVIDENDS
+GET https://statusinvest.com.br/fii/companytickerprovents?ticker=VGIA11&chartProventsType=2
+Accept: application/json
+Host: statusinvest.com.br
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0
+Accept-Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+
